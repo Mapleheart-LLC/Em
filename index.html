@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Trigger Page</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+        button {
+            background-color: #4169E1;
+            color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #1E90FF;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .fun-text {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            font-weight: bold;
+            color: #FFD700;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <h1>🎉 Welcome to the Fun Webhook Party! 🎉</h1>
+    <p class="fun-text">Hold on tight! The magic is happening...</p>
+    <button id="triggerWebhook">Send Webhook</button>
+
+    <script>
+        // Replace with your actual webhook URL
+        const webhookUrl = "https://your-webhook-url.com";
+
+        // Function to send a webhook
+        function sendWebhook() {
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ event: 'page_loaded', timestamp: new Date().toISOString() }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Webhook sent successfully", data);
+                alert("🎉 Webhook sent! Party started! 🎉");
+            })
+            .catch(error => {
+                console.error("Error sending webhook", error);
+                alert("Oops! Something went wrong... 😬");
+            });
+        }
+
+        // Send webhook as soon as the page loads
+        window.addEventListener('load', () => {
+            sendWebhook();
+        });
+
+        // Add click event listener to the button
+        document.getElementById('triggerWebhook').addEventListener('click', sendWebhook);
+    </script>
+</body>
+</html>
